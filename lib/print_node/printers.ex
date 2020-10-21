@@ -21,7 +21,7 @@ defmodule PrintNode.Printers do
     end
   end
 
-  defp json_to_printer(json) do
+  def json_to_printer(json) do
     PrintNode.Resources.Printer
     |> struct(json)
     |> Map.update!(:computer, &struct(PrintNode.Resources.Computer, &1))
