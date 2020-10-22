@@ -1,4 +1,8 @@
 defmodule PrintNode.PrintJobs do
+  @moduledoc """
+  API interface for PrintJob operations
+  """
+
   def list() do
     PrintNode.Client.get!("/printjobs")
     |> case do

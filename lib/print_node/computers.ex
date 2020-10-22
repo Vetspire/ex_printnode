@@ -1,4 +1,8 @@
 defmodule PrintNode.Computers do
+  @moduledoc """
+  API interface for Computer operations
+  """
+
   def list() do
     PrintNode.Client.get!("/computers")
     |> case do

@@ -1,5 +1,3 @@
 defmodule PrintNode do
-  @moduledoc """
-  Documentation for `PrintNode`.
-  """
+  @moduledoc false
 end

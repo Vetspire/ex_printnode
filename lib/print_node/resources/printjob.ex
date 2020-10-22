@@ -1,4 +1,8 @@
 defmodule PrintNode.Resources.PrintJob do
+  @moduledoc """
+  Struct for PrintNode PrintJob resource
+  """
+
   @enforce_keys [:title, :contentType, :content, :source]
   @derive Jason.Encoder
 

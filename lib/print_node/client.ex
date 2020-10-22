@@ -1,4 +1,8 @@
 defmodule PrintNode.Client do
+  @moduledoc """
+  Wrapper around HTTPoison for making the actual HTTP requests
+  """
+
   use HTTPoison.Base
 
   def process_request_url(url) do
