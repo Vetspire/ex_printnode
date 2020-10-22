@@ -3,13 +3,16 @@ defmodule PrintNode.Computers do
   API interface for Computer operations
   """
 
+  alias PrintNode.Client
+  alias PrintNode.Resources.Computer
+
   @spec list(PrintNode.options()) ::
-          {:error, String.t()} | {:ok, [%PrintNode.Resources.Computer{}]}
+          {:error, String.t()} | {:ok, [%Computer{}]}
   def list(options) do
-    PrintNode.Client.get!("/computers", PrintNode.Client.prepare_request_headers(options))
+    Client.get!("/computers", Client.prepare_request_headers(options))
     |> case do
       %{body: body, status_code: 200} ->
-        {:ok, body |> Enum.map(&struct(PrintNode.Resources.Computer, &1))}
+        {:ok, body |> Enum.map(&struct(Computer, &1))}
 
       %{body: body, status_code: _status_code} ->
         {:error, body[:message]}
@@ -17,15 +20,15 @@ defmodule PrintNode.Computers do
   end
 
   @spec get(String.t() | integer(), PrintNode.options()) ::
-          {:error, String.t()} | {:ok, [%PrintNode.Resources.Computer{}]}
+          {:error, String.t()} | {:ok, [%Computer{}]}
   def get(computer_set, options) do
-    PrintNode.Client.get!(
+    Client.get!(
       "/computers/#{computer_set}",
-      PrintNode.Client.prepare_request_headers(options)
+      Client.prepare_request_headers(options)
     )
     |> case do
       %{body: body, status_code: 200} ->
-        {:ok, body |> Enum.map(&struct(PrintNode.Resources.Computer, &1))}
+        {:ok, body |> Enum.map(&struct(Computer, &1))}
 
       %{body: body, status_code: _status_code} ->
         {:error, body[:message]}

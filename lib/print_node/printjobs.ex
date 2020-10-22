@@ -3,10 +3,13 @@ defmodule PrintNode.PrintJobs do
   API interface for PrintJob operations
   """
 
+  alias PrintNode.{Client, Printers}
+  alias PrintNode.Resources.PrintJob
+
   @spec list(PrintNode.options()) ::
-          {:error, String.t()} | {:ok, [%PrintNode.Resources.PrintJob{}]}
+          {:error, String.t()} | {:ok, [%PrintJob{}]}
   def list(options) do
-    PrintNode.Client.get!("/printjobs", PrintNode.Client.prepare_request_headers(options))
+    Client.get!("/printjobs", Client.prepare_request_headers(options))
     |> case do
       %{body: body, status_code: 200} ->
         {:ok, body |> Enum.map(&json_to_printjob/1)}
@@ -17,11 +20,11 @@ defmodule PrintNode.PrintJobs do
   end
 
   @spec get(String.t() | integer(), PrintNode.options()) ::
-          {:error, String.t()} | {:ok, [%PrintNode.Resources.PrintJob{}]}
+          {:error, String.t()} | {:ok, [%PrintJob{}]}
   def get(printjob_set, options) do
-    PrintNode.Client.get!(
+    Client.get!(
       "/printjobs/#{printjob_set}",
-      PrintNode.Client.prepare_request_headers(options)
+      Client.prepare_request_headers(options)
     )
     |> case do
       %{body: body, status_code: 200} ->
@@ -32,22 +35,22 @@ defmodule PrintNode.PrintJobs do
     end
   end
 
-  @spec json_to_printjob(map()) :: %PrintNode.Resources.PrintJob{}
+  @spec json_to_printjob(map()) :: %PrintJob{}
   def json_to_printjob(json) do
-    PrintNode.Resources.PrintJob
+    PrintJob
     |> struct(json)
-    |> Map.update!(:printer, &PrintNode.Printers.json_to_printer/1)
+    |> Map.update!(:printer, &Printers.json_to_printer/1)
   end
 
-  @spec create(%PrintNode.Resources.PrintJob{}, PrintNode.options()) ::
+  @spec create(%PrintJob{}, PrintNode.options()) ::
           {:error, String.t()} | {:ok, integer()}
   def create(printjob, options)
 
-  def create(%PrintNode.Resources.PrintJob{printer: _printer_id} = printjob, options) do
-    PrintNode.Client.post!(
+  def create(%PrintJob{printer: _printer_id} = printjob, options) do
+    Client.post!(
       "/printjobs",
       printjob |> Jason.encode!(),
-      PrintNode.Client.prepare_request_headers(options)
+      Client.prepare_request_headers(options)
     )
     |> case do
       %{body: printjob_id, status_code: 201} ->

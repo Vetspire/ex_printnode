@@ -3,10 +3,13 @@ defmodule PrintNode.Printers do
   API interface for Printer operations
   """
 
+  alias PrintNode.Client
+  alias PrintNode.Resources.{Computer, Printer}
+
   @spec list(PrintNode.options()) ::
-          {:error, String.t()} | {:ok, [%PrintNode.Resources.Printer{}]}
+          {:error, String.t()} | {:ok, [%Printer{}]}
   def list(options) do
-    PrintNode.Client.get!("/printers", PrintNode.Client.prepare_request_headers(options))
+    Client.get!("/printers", Client.prepare_request_headers(options))
     |> case do
       %{body: body, status_code: 200} ->
         {:ok, body |> Enum.map(&json_to_printer/1)}
@@ -17,11 +20,11 @@ defmodule PrintNode.Printers do
   end
 
   @spec get(String.t() | integer(), PrintNode.options()) ::
-          {:error, String.t()} | {:ok, [%PrintNode.Resources.Printer{}]}
+          {:error, String.t()} | {:ok, [%Printer{}]}
   def get(printer_set, options) do
-    PrintNode.Client.get!(
+    Client.get!(
       "/printers/#{printer_set}",
-      PrintNode.Client.prepare_request_headers(options)
+      Client.prepare_request_headers(options)
     )
     |> case do
       %{body: body, status_code: 200} ->
@@ -32,11 +35,11 @@ defmodule PrintNode.Printers do
     end
   end
 
-  @spec json_to_printer(map()) :: %PrintNode.Resources.Printer{}
+  @spec json_to_printer(map()) :: %Printer{}
   def json_to_printer(json) do
-    PrintNode.Resources.Printer
+    Printer
     |> struct(json)
-    |> Map.update!(:computer, &struct(PrintNode.Resources.Computer, &1))
+    |> Map.update!(:computer, &struct(Computer, &1))
   end
 
   @spec delete :: none
