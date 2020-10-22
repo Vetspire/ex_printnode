@@ -15,8 +15,12 @@ defmodule PrintNode.Client do
   end
 
   def process_request_headers(headers) do
-    credentials = (Application.get_env(:ex_printnode, :api_key) <> ":") |> Base.encode64()
+    [{"Content-Type", "application/json"} | headers]
+  end
 
-    [{"Content-Type", "application/json"}, {"Authorization", "Basic #{credentials}"} | headers]
+  def prepare_request_headers(api_key) do
+    credentials = (api_key <> ":") |> Base.encode64()
+
+    [{"Authorization", "Basic #{credentials}"}]
   end
 end

@@ -17,24 +17,17 @@ end
 
 ## Usage
 
-Set API key in your configuration:
+Available methods - use with your API key:
 
 ```elixir
-config :ex_printnode,
-  api_key: System.fetch_env!("PRINT_NODE_API_KEY")
-```
+PrintNode.Computers.list(printnode_api_key)
+PrintNode.Computers.get(computer_set, printnode_api_key)
 
-Available methods:
+PrintNode.Printers.list(printnode_api_key)
+PrintNode.Printers.get(printer_set, printnode_api_key)
 
-```elixir
-PrintNode.Computers.list()
-PrintNode.Computers.get(computer_set)
-
-PrintNode.Printers.list()
-PrintNode.Printers.get(printer_set)
-
-PrintNode.PrintJobs.list()
-PrintNode.PrintJobs.get(printjob_set)
+PrintNode.PrintJobs.list(printnode_api_key)
+PrintNode.PrintJobs.get(printjob_set, printnode_api_key)
 ```
 
 ### Creating a Print Job
@@ -47,10 +40,9 @@ PrintNode.PrintJobs.get(printjob_set)
   source: "printjob-test",
   printer: 123456
 }
-|> PrintNode.PrintJobs.create()
+|> PrintNode.PrintJobs.create(printnode_api_key)
 ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/ex_printnode](https://hexdocs.pm/ex_printnode).
-
