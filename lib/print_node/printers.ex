@@ -3,9 +3,10 @@ defmodule PrintNode.Printers do
   API interface for Printer operations
   """
 
-  @spec list(String.t() | nil) :: {:error, String.t()} | {:ok, [%PrintNode.Resources.Printer{}]}
-  def list(api_key \\ "") do
-    PrintNode.Client.get!("/printers", PrintNode.Client.prepare_request_headers(api_key))
+  @spec list(PrintNode.options()) ::
+          {:error, String.t()} | {:ok, [%PrintNode.Resources.Printer{}]}
+  def list(options) do
+    PrintNode.Client.get!("/printers", PrintNode.Client.prepare_request_headers(options))
     |> case do
       %{body: body, status_code: 200} ->
         {:ok, body |> Enum.map(&json_to_printer/1)}
@@ -15,12 +16,12 @@ defmodule PrintNode.Printers do
     end
   end
 
-  @spec get(String.t() | integer(), String.t() | nil) ::
+  @spec get(String.t() | integer(), PrintNode.options()) ::
           {:error, String.t()} | {:ok, [%PrintNode.Resources.Printer{}]}
-  def get(printer_set, api_key \\ "") do
+  def get(printer_set, options) do
     PrintNode.Client.get!(
       "/printers/#{printer_set}",
-      PrintNode.Client.prepare_request_headers(api_key)
+      PrintNode.Client.prepare_request_headers(options)
     )
     |> case do
       %{body: body, status_code: 200} ->

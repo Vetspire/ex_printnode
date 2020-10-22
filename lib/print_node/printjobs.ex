@@ -3,9 +3,10 @@ defmodule PrintNode.PrintJobs do
   API interface for PrintJob operations
   """
 
-  @spec list(String.t() | nil) :: {:error, String.t()} | {:ok, [%PrintNode.Resources.PrintJob{}]}
-  def list(api_key \\ "") do
-    PrintNode.Client.get!("/printjobs", PrintNode.Client.prepare_request_headers(api_key))
+  @spec list(PrintNode.options()) ::
+          {:error, String.t()} | {:ok, [%PrintNode.Resources.PrintJob{}]}
+  def list(options) do
+    PrintNode.Client.get!("/printjobs", PrintNode.Client.prepare_request_headers(options))
     |> case do
       %{body: body, status_code: 200} ->
         {:ok, body |> Enum.map(&json_to_printjob/1)}
@@ -15,12 +16,12 @@ defmodule PrintNode.PrintJobs do
     end
   end
 
-  @spec get(String.t() | integer(), String.t() | nil) ::
+  @spec get(String.t() | integer(), PrintNode.options()) ::
           {:error, String.t()} | {:ok, [%PrintNode.Resources.PrintJob{}]}
-  def get(printjob_set, api_key \\ "") do
+  def get(printjob_set, options) do
     PrintNode.Client.get!(
       "/printjobs/#{printjob_set}",
-      PrintNode.Client.prepare_request_headers(api_key)
+      PrintNode.Client.prepare_request_headers(options)
     )
     |> case do
       %{body: body, status_code: 200} ->
@@ -38,15 +39,15 @@ defmodule PrintNode.PrintJobs do
     |> Map.update!(:printer, &PrintNode.Printers.json_to_printer/1)
   end
 
-  @spec create(%PrintNode.Resources.PrintJob{}, String.t() | nil) ::
+  @spec create(%PrintNode.Resources.PrintJob{}, PrintNode.options()) ::
           {:error, String.t()} | {:ok, integer()}
-  def create(printjob, api_key \\ "")
+  def create(printjob, options)
 
-  def create(%PrintNode.Resources.PrintJob{printer: _printer_id} = printjob, api_key) do
+  def create(%PrintNode.Resources.PrintJob{printer: _printer_id} = printjob, options) do
     PrintNode.Client.post!(
       "/printjobs",
       printjob |> Jason.encode!(),
-      PrintNode.Client.prepare_request_headers(api_key)
+      PrintNode.Client.prepare_request_headers(options)
     )
     |> case do
       %{body: printjob_id, status_code: 201} ->
@@ -57,7 +58,7 @@ defmodule PrintNode.PrintJobs do
     end
   end
 
-  def create(_printjob, _api_key), do: {:error, "invalid printjob parameters"}
+  def create(_printjob, _options), do: {:error, "invalid printjob parameters"}
 
   def delete() do
     throw({:not_implemented, "please raise PR"})

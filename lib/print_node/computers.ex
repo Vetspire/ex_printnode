@@ -3,9 +3,10 @@ defmodule PrintNode.Computers do
   API interface for Computer operations
   """
 
-  @spec list(String.t() | nil) :: {:error, String.t()} | {:ok, [%PrintNode.Resources.Computer{}]}
-  def list(api_key \\ "") do
-    PrintNode.Client.get!("/computers", PrintNode.Client.prepare_request_headers(api_key))
+  @spec list(PrintNode.options()) ::
+          {:error, String.t()} | {:ok, [%PrintNode.Resources.Computer{}]}
+  def list(options) do
+    PrintNode.Client.get!("/computers", PrintNode.Client.prepare_request_headers(options))
     |> case do
       %{body: body, status_code: 200} ->
         {:ok, body |> Enum.map(&struct(PrintNode.Resources.Computer, &1))}
@@ -15,12 +16,12 @@ defmodule PrintNode.Computers do
     end
   end
 
-  @spec get(String.t() | integer(), String.t() | nil) ::
+  @spec get(String.t() | integer(), PrintNode.options()) ::
           {:error, String.t()} | {:ok, [%PrintNode.Resources.Computer{}]}
-  def get(computer_set, api_key \\ "") do
+  def get(computer_set, options) do
     PrintNode.Client.get!(
       "/computers/#{computer_set}",
-      PrintNode.Client.prepare_request_headers(api_key)
+      PrintNode.Client.prepare_request_headers(options)
     )
     |> case do
       %{body: body, status_code: 200} ->

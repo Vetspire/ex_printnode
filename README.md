@@ -20,14 +20,14 @@ end
 Available methods - use with your API key:
 
 ```elixir
-PrintNode.Computers.list(printnode_api_key)
-PrintNode.Computers.get(computer_set, printnode_api_key)
+PrintNode.Computers.list(api_key: printnode_api_key)
+PrintNode.Computers.get(computer_set, api_key: printnode_api_key)
 
-PrintNode.Printers.list(printnode_api_key)
-PrintNode.Printers.get(printer_set, printnode_api_key)
+PrintNode.Printers.list(api_key: printnode_api_key)
+PrintNode.Printers.get(printer_set, api_key: printnode_api_key)
 
-PrintNode.PrintJobs.list(printnode_api_key)
-PrintNode.PrintJobs.get(printjob_set, printnode_api_key)
+PrintNode.PrintJobs.list(api_key: printnode_api_key)
+PrintNode.PrintJobs.get(printjob_set, api_key: printnode_api_key)
 ```
 
 ### Creating a Print Job
@@ -40,7 +40,7 @@ PrintNode.PrintJobs.get(printjob_set, printnode_api_key)
   source: "printjob-test",
   printer: 123456
 }
-|> PrintNode.PrintJobs.create(printnode_api_key)
+|> PrintNode.PrintJobs.create(api_key: printnode_api_key)
 ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
