@@ -3,6 +3,7 @@ defmodule PrintNode.Computers do
   API interface for Computer operations
   """
 
+  @spec list :: {:error, String.t()} | {:ok, [%PrintNode.Resources.Computer{}]}
   def list() do
     PrintNode.Client.get!("/computers")
     |> case do
@@ -14,6 +15,8 @@ defmodule PrintNode.Computers do
     end
   end
 
+  @spec get(String.t() | integer()) ::
+          {:error, String.t()} | {:ok, [%PrintNode.Resources.Computer{}]}
   def get(computer_set) do
     PrintNode.Client.get!("/computers/#{computer_set}")
     |> case do
@@ -25,6 +28,7 @@ defmodule PrintNode.Computers do
     end
   end
 
+  @spec delete :: none
   def delete() do
     throw({:not_implemented, "please raise PR"})
   end

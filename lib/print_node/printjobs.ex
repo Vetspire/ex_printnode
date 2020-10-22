@@ -3,6 +3,7 @@ defmodule PrintNode.PrintJobs do
   API interface for PrintJob operations
   """
 
+  @spec list :: {:error, String.t()} | {:ok, [%PrintNode.Resources.PrintJob{}]}
   def list() do
     PrintNode.Client.get!("/printjobs")
     |> case do
@@ -14,6 +15,8 @@ defmodule PrintNode.PrintJobs do
     end
   end
 
+  @spec get(String.t() | integer()) ::
+          {:error, String.t()} | {:ok, [%PrintNode.Resources.PrintJob{}]}
   def get(printjob_set) do
     PrintNode.Client.get!("/printjobs/#{printjob_set}")
     |> case do
@@ -25,12 +28,14 @@ defmodule PrintNode.PrintJobs do
     end
   end
 
+  @spec json_to_printjob(map()) :: %PrintNode.Resources.PrintJob{}
   def json_to_printjob(json) do
     PrintNode.Resources.PrintJob
     |> struct(json)
     |> Map.update!(:printer, &PrintNode.Printers.json_to_printer/1)
   end
 
+  @spec create(%PrintNode.Resources.PrintJob{}) :: {:error, String.t()} | {:ok, integer()}
   def create(%PrintNode.Resources.PrintJob{printer: _printer_id} = printjob) do
     PrintNode.Client.post!("/printjobs", printjob |> Jason.encode!())
     |> case do
