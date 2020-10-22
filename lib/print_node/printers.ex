@@ -19,6 +19,19 @@ defmodule PrintNode.Printers do
     end
   end
 
+  @spec list_by_computer(String.t() | integer(), PrintNode.options()) ::
+          {:error, String.t()} | {:ok, [%Printer{}]}
+  def list_by_computer(computer_set, options) do
+    Client.get!("/computers/#{computer_set}/printers", Client.prepare_request_headers(options))
+    |> case do
+      %{body: body, status_code: 200} ->
+        {:ok, body |> Enum.map(&json_to_printer/1)}
+
+      %{body: body, status_code: _status_code} ->
+        {:error, body[:message]}
+    end
+  end
+
   @spec get(String.t() | integer(), PrintNode.options()) ::
           {:error, String.t()} | {:ok, [%Printer{}]}
   def get(printer_set, options) do

@@ -24,6 +24,7 @@ PrintNode.Computers.list(api_key: printnode_api_key)
 PrintNode.Computers.get(computer_set, api_key: printnode_api_key)
 
 PrintNode.Printers.list(api_key: printnode_api_key)
+PrintNode.Printers.list_by_computer(computer_set, api_key: printnode_api_key)
 PrintNode.Printers.get(printer_set, api_key: printnode_api_key)
 
 PrintNode.PrintJobs.list(api_key: printnode_api_key)
