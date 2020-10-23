@@ -11,7 +11,8 @@ defmodule PrintNode.MixProject do
       name: "ExPrintNode",
       description: "Small HTTPoison based wrapper around PrintNode API.",
       source_url: "https://github.com/vetspire/ex_printnode",
-      package: package()
+      package: package(),
+      aliases: aliases()
     ]
   end
 
@@ -35,12 +36,18 @@ defmodule PrintNode.MixProject do
     ]
   end
 
-  defp package() do
+  defp package do
     [
       licenses: ["MIT"],
       links: %{
         "GitHub" => "https://github.com/vetspire/ex_printnode"
       }
+    ]
+  end
+
+  defp aliases do
+    [
+      lint: ["format --check-formatted", "credo --strict -a"]
     ]
   end
 end
