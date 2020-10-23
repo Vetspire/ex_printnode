@@ -7,7 +7,11 @@ defmodule PrintNode.MixProject do
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      name: "ExPrintNode",
+      description: "Small HTTPoison based wrapper around PrintNode API.",
+      source_url: "https://github.com/vetspire/ex_printnode",
+      package: package()
     ]
   end
 
@@ -27,6 +31,15 @@ defmodule PrintNode.MixProject do
       {:credo, "~> 1.5.0-rc.2", only: [:dev, :test], runtime: false}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+    ]
+  end
+
+  defp package() do
+    [
+      licenses: ["MIT"],
+      links: %{
+        "GitHub" => "https://github.com/vetspire/ex_printnode"
+      }
     ]
   end
 end
