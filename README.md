@@ -1,11 +1,16 @@
 # PrintNode
 
+[![hex.pm](https://img.shields.io/hexpm/v/ex_printnode.svg)](https://hex.pm/packages/ex_printnode)
+[![hexdocs.pm](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/ex_printnode/)
+[![hex.pm](https://img.shields.io/hexpm/dt/ex_printnode.svg)](https://hex.pm/packages/ex_printnode)
+[![hex.pm](https://img.shields.io/hexpm/l/ex_printnode.svg)](https://hex.pm/packages/ex_printnode)
+[![github.com](https://img.shields.io/github/last-commit/Vetspire/ex_printnode.svg)](https://github.com/Vetspire/ex_printnode/commits/master)
+
 Small [HTTPoison](https://github.com/edgurgel/httpoison) based wrapper around [PrintNode API](https://www.printnode.com/en/docs/api/curl).
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `ex_printnode` to your list of dependencies in `mix.exs`:
+Add `ex_printnode` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -43,7 +48,3 @@ PrintNode.PrintJobs.get(printjob_set, api_key: printnode_api_key)
 }
 |> PrintNode.PrintJobs.create(api_key: printnode_api_key)
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/ex_printnode](https://hexdocs.pm/ex_printnode).
