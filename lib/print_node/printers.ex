@@ -56,7 +56,7 @@ defmodule PrintNode.Printers do
   end
 
   @spec delete :: none
-  def delete() do
+  def delete do
     throw({:not_implemented, "please raise PR"})
   end
 
