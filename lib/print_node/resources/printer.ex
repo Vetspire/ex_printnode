@@ -3,5 +3,14 @@ defmodule PrintNode.Resources.Printer do
   Struct for PrintNode Printer resource
   """
 
-  defstruct [:createTimestamp, :description, :id, :capabilities, :default, :state, :computer]
+  defstruct [
+    :createTimestamp,
+    :name,
+    :description,
+    :id,
+    :capabilities,
+    :default,
+    :state,
+    :computer
+  ]
 end
