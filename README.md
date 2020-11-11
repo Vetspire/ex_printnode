@@ -10,7 +10,7 @@ by adding `ex_printnode` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:ex_printnode, "~> 0.1.1"}
+    {:ex_printnode, "~> 0.1.2"}
   ]
 end
 ```
