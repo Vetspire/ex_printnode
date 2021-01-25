@@ -19,6 +19,19 @@ defmodule PrintNode.PrintJobs do
     end
   end
 
+  @spec list(String.t(), PrintNode.options()) ::
+          {:error, String.t()} | {:ok, [%PrintJob{}]}
+  def list(printer_set, options) do
+    Client.get!("/printers/#{printer_set}/printjobs", Client.prepare_request_headers(options))
+    |> case do
+      %{body: body, status_code: 200} ->
+        {:ok, body |> Enum.map(&json_to_printjob/1)}
+
+      %{body: body, status_code: _status_code} ->
+        {:error, body[:message]}
+    end
+  end
+
   @spec get(String.t() | integer(), PrintNode.options()) ::
           {:error, String.t()} | {:ok, [%PrintJob{}]}
   def get(printjob_set, options) do
